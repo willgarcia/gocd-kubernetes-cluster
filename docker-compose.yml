@@ -1,0 +1,26 @@
+version: '3'
+services:
+  gocd-server:
+    build:
+      context: .
+      dockerfile: Dockerfile-gocd-server
+      args:
+        - GO_VERSION=17.1.0-4511
+        - DOWNLOAD_URL=https://download.gocd.io/binaries
+    environment:
+      - MSG_TIME=0
+    ports:
+      - 8153:8153
+      - 8154:8154
+
+  gocd-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile-gocd-agent
+    cap_add:
+      - ALL
+    privileged: true
+    environment:
+      - GO_SERVER_URL=https://gocd-server:8154/go
+    links:
+      - gocd-server:gocd-server
