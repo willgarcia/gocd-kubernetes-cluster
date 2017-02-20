@@ -1,1 +1,11 @@
 server-backup/data/*
+server/config/addons/
+server/config/agentkeystore
+server/config/cipher
+server/config/db/
+server/config/default/
+server/config/etc/
+server/config/keystore
+server/config/plugins/
+server/config/truststore
+server/data/*

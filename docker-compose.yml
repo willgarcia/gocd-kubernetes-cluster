@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   gocd-server:
     build:
@@ -8,6 +9,8 @@ services:
         - DOWNLOAD_URL=https://download.gocd.io/binaries
     environment:
       - MSG_TIME=0
+    volumes:
+      - ./server/config:/var/lib/go-server/config/
     ports:
       - 8153:8153
       - 8154:8154

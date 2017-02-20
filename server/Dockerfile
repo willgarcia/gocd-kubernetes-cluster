@@ -15,8 +15,6 @@ RUN mkdir -p /config/default /config/db /config/addons /config/plugins /artifact
   ln -sf /config/plugins /var/lib/go-server/plugins/external && \
   ln -sf /logs /var/log/go-server
 
-RUN wget -O /var/lib/go-server/plugins/external/yaml-config-plugin.jar https://github.com/tomzo/gocd-yaml-config-plugin/releases/download/0.4.0/yaml-config-plugin-0.4.0.jar
-
 VOLUME ["/config", "/artifacts", "/logs"]
 
 EXPOSE 8153 8154
@@ -30,6 +28,5 @@ RUN echo "Installing GoCD ${GO_VERSION} (${DOWNLOAD_URL})" && wget $DOWNLOAD_URL
   mv ./go-server-* ./go-server && \
   chmod 755 /start && \
   rm -rf go-server-* /var/tmp/* /go-server/init.* /go-server/server.cmd /go-server/*.bat /go-server/*.sh /go-server/default.* /go-server/defaultFiles
-
 
 CMD ["/start"]

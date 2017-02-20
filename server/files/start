@@ -143,3 +143,5 @@ echo Starting GoCD server in directory: $SERVER_WORK_DIR
 cd "$SERVER_WORK_DIR"
 # exec $(autoDetectJavaExecutable) -jar /go-server/go.jar ${SERVER_STARTUP_ARGS}
 echo_or_exec_go
+
+wget -O /var/lib/go-server/plugins/external/yaml-config-plugin.jar https://github.com/tomzo/gocd-yaml-config-plugin/releases/download/0.4.0/yaml-config-plugin-0.4.0.jar
