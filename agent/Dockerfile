@@ -88,7 +88,7 @@ RUN chmod +x /usr/local/bin/docker-compose
 
 RUN echo `hostname` > /opt/go-agent/config/guid.txt
 
-COPY ./files/* /
+COPY ./files/ /
 RUN chmod 755 /start
 
 CMD /start
