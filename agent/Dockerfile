@@ -1,5 +1,7 @@
 FROM docker:1.12-dind
 
+ENV DOCKER_CONTENT_TRUST=1
+
 ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_MINOR=92 \
     JAVA_VERSION_BUILD=14 \
@@ -88,7 +90,7 @@ RUN chmod +x /usr/local/bin/docker-compose
 
 RUN echo `hostname` > /opt/go-agent/config/guid.txt
 
-COPY ./files/* /
+COPY ./files/ /
 RUN chmod 755 /start
 
 CMD /start

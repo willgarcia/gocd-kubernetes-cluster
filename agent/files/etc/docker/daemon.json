@@ -1,0 +1,6 @@
+{
+  "live-restore": false,
+  "icc": false,
+  "disable-legacy-registry": true,
+  "userns-remap": "default"
+}

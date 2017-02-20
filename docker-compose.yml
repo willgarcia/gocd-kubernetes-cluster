@@ -31,5 +31,6 @@ services:
     privileged: true
     environment:
       - GO_SERVER_URL=https://gocd-server:8154/go
+      - DOCKER_CONTENT_TRUST=1
     links:
       - gocd-server:gocd-server

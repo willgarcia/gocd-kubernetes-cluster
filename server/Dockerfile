@@ -15,7 +15,7 @@ RUN mkdir -p /config/default /config/db /config/addons /config/plugins /artifact
   ln -sf /config/plugins /var/lib/go-server/plugins/external && \
   ln -sf /logs /var/log/go-server
 
-VOLUME ["/config", "/artifacts", "/logs"]
+VOLUME ["/config"]
 
 EXPOSE 8153 8154
 
