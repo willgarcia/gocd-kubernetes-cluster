@@ -13,6 +13,14 @@ services:
       - 8153:8153
       - 8154:8154
 
+  gocd-server-backup:
+    build:
+      context: ./server-backup
+    volumes:
+      - ./server-backup/data:/var/lib/go-server/artifacts/serverBackups/
+    links:
+      - gocd-server:gocd-server
+
   gocd-agent:
     build:
       context: .

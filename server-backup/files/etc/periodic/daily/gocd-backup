@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -z "$ADMIN_USER" -o -z "$ADMIN_PASSWORD" ]
+then
+   echo Admin user or password not specified. No authentication will be attempted.
+   echo To specify credentials set environment variables ADMIN_USER and ADMIN_PASSWORD - use a secure variable for the latter.
+   CREDENTIALS=""
+else
+   CREDENTIALS="--user $ADMIN_USER:$ADMIN_PASSWORD"
+fi
+
+curl $CREDENTIALS --insecure 'https://gocd-server:8154/go/api/backups' \
+      -H 'Confirm: true' \
+      -H 'Accept: application/vnd.go.cd.v1+json' \
+      -X POST
