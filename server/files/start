@@ -106,7 +106,7 @@ if [ ! -f /config/gocd-server-config.xml ]; then
   unzip -qq /go-server/go.jar defaultFiles/config/cruise-config.xml
   cp defaultFiles/config/cruise-config.xml /config/gocd-server-config.xml
 fi
-AGENT_KEY="${AGENT_KEY:-123456789abcdef}"
+AGENT_KEY="${AGENT_KEY:-388b633a88de126531afa41eff9aa69e}"
 [[ -n "$AGENT_KEY" ]] && sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /config/gocd-server-config.xml
 if [ ! -d /config/db ]; then
   echo "Bootstrapping database."
