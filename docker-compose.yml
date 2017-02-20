@@ -23,14 +23,21 @@ services:
     links:
       - gocd-server:gocd-server
 
+  docker-in-docker:
+    build:
+      context: ./docker-in-docker
+    cap_add:
+    - ALL
+    privileged: true
+    environment:
+      - DOCKER_CONTENT_TRUST=1
+
   gocd-agent:
     build:
       context: ./agent
-    cap_add:
-      - ALL
-    privileged: true
     environment:
       - GO_SERVER_URL=https://gocd-server:8154/go
-      - DOCKER_CONTENT_TRUST=1
+      - DOCKER_HOST=docker-in-docker
     links:
       - gocd-server:gocd-server
+      - docker-in-docker:docker-in-docker

@@ -1,4 +1,4 @@
-/opt/go-agent/agent.sh&
+rm -f /var/run/docker.pid
 
 dockerd \
    --host=unix:///var/run/docker.sock \

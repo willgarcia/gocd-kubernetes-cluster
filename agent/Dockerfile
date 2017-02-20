@@ -1,6 +1,4 @@
-FROM docker:1.12-dind
-
-ENV DOCKER_CONTENT_TRUST=1
+FROM alpine:latest
 
 ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_MINOR=92 \
@@ -88,9 +86,16 @@ RUN apk add --no-cache --update git curl bash openssh ca-certificates && rm -rf 
 RUN curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 
+RUN   apk update \
+  &&   apk add ca-certificates wget \
+  &&   update-ca-certificates
+RUN wget https://get.docker.com/builds/Linux/x86_64/docker-1.12.6.tgz -O /tmp/docker.tgz && \
+    tar -xf /tmp/docker.tgz -C /tmp && \
+    mv /tmp/docker/docker /usr/local/bin/ && \
+    rm -rf /tmp/docker*
 RUN echo `hostname` > /opt/go-agent/config/guid.txt
 
 COPY ./files/ /
-RUN chmod 755 /start
+RUN chmod 755 /opt/go-agent/agent.sh
 
-CMD /start
+CMD /opt/go-agent/agent.sh
