@@ -2,8 +2,7 @@ version: '3'
 services:
   gocd-server:
     build:
-      context: .
-      dockerfile: Dockerfile-gocd-server
+      context: ./server
       args:
         - GO_VERSION=17.1.0-4511
         - DOWNLOAD_URL=https://download.gocd.io/binaries
@@ -23,8 +22,7 @@ services:
 
   gocd-agent:
     build:
-      context: .
-      dockerfile: Dockerfile-gocd-agent
+      context: ./agent
     cap_add:
       - ALL
     privileged: true

@@ -1,6 +1,5 @@
 FROM docker:1.12-dind
 
-# Java Version and other ENV
 ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_MINOR=92 \
     JAVA_VERSION_BUILD=14 \
@@ -11,10 +10,10 @@ ENV JAVA_VERSION_MAJOR=8 \
     GLIBC_VERSION=2.23-r3 \
     LANG=C.UTF-8
 
-# do all in one step
 RUN set -ex && \
     apk upgrade --update && \
-    apk add --update libstdc++ curl ca-certificates bash && \
+    apk --no-cache add git bash && \
+    apk add --update libstdc++ curl ca-certificates && \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
     apk add --allow-untrusted /tmp/*.apk && \
     rm -v /tmp/*.apk && \
@@ -89,8 +88,7 @@ RUN chmod +x /usr/local/bin/docker-compose
 
 RUN echo `hostname` > /opt/go-agent/config/guid.txt
 
-CMD /opt/go-agent/agent.sh && dockerd \
-		--host=unix:///var/run/docker.sock \
-		--host=tcp://0.0.0.0:2375 \
-		--storage-driver=vfs \
-		"$@"
+COPY ./files/* /
+RUN chmod 755 /start
+
+CMD /start
