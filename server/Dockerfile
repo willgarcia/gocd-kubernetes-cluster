@@ -29,4 +29,7 @@ RUN echo "Installing GoCD ${GO_VERSION} (${DOWNLOAD_URL})" && wget $DOWNLOAD_URL
   chmod 755 /start && \
   rm -rf go-server-* /var/tmp/* /go-server/init.* /go-server/server.cmd /go-server/*.bat /go-server/*.sh /go-server/default.* /go-server/defaultFiles
 
+HEALTHCHECK --interval=1m --timeout=3s \
+  CMD curl -f https://localhost:8154/ || exit 1
+
 CMD ["/start"]
