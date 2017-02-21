@@ -21,11 +21,11 @@ services:
     volumes:
       - ./server-backup/data:/var/lib/go-server/artifacts/serverBackups/
     links:
-      - gocd-server:gocd-server
+      - gocd-server
 
-  docker-in-docker:
+  dind:
     build:
-      context: ./docker-in-docker
+      context: ./dind
     cap_add:
     - ALL
     privileged: true
@@ -35,9 +35,12 @@ services:
   gocd-agent:
     build:
       context: ./agent
+      args:
+        - GOCD_VERSION=17.1.0
+        - GOCD_REVISION=4511
     environment:
       - GO_SERVER_URL=https://gocd-server:8154/go
-      - DOCKER_HOST=docker-in-docker
+      - DOCKER_HOST=dind
     links:
-      - gocd-server:gocd-server
-      - docker-in-docker:docker-in-docker
+      - gocd-server
+      - dind
