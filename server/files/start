@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+set -e
 
 MANUAL_SETTING=${MANUAL_SETTING:-"N"}
 
@@ -106,7 +107,9 @@ if [ ! -f /config/gocd-server-config.xml ]; then
   unzip -qq /go-server/go.jar defaultFiles/config/cruise-config.xml
   cp defaultFiles/config/cruise-config.xml /config/gocd-server-config.xml
 fi
-AGENT_KEY="${AGENT_KEY:-123456789abcdef}"
+
+AGENT_KEY=${GO_AGENT_AUTO_REGISTER_KEY}
+
 [[ -n "$AGENT_KEY" ]] && sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /config/gocd-server-config.xml
 if [ ! -d /config/db ]; then
   echo "Bootstrapping database."

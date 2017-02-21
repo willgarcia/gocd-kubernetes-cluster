@@ -9,6 +9,7 @@ services:
         - DOWNLOAD_URL=https://download.gocd.io/binaries
     environment:
       - MSG_TIME=0
+      - GO_AGENT_AUTO_REGISTER_KEY=388b633a88de126531afa41eff9aa69e
     volumes:
       - ./server/config:/var/lib/go-server/config/
     ports:
