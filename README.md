@@ -15,17 +15,19 @@
 4. Subsequently, the users can be created by adding the users and roles as follows:
 
 ```
-<security>
-  <passwordFile path="/var/tmp/passwd" />
-  <roles>
-    <role name="admin">
-      <users>
-        <user>fred.bloggs</user>
-        <user>jim.smith</user>
-      </users>
-    </role>
-  <roles>
-</security>
+<server>
+  <security>
+    <passwordFile path="/var/tmp/passwd" />
+    <roles>
+      <role name="admin">
+        <users>
+          <user>fred.bloggs</user>
+          <user>jim.smith</user>
+        </users>
+      </role>
+    <roles>
+  </security>
+</server>
 ```
 
 5. Finally, the hashed password and the username is stored in the file created as <username>:<hased_password>.
