@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="88">
-  <server artifactsdir="artifacts" agentAutoRegisterKey="388b633a88de126531afa41eff9aa69e" commandRepositoryLocation="default" serverId="9198a651-ab88-42e5-a7c9-1eafa1631b77" />
+  <server artifactsdir="artifacts" agentAutoRegisterKey="388b633a88de126531afa41eff9aa69e" commandRepositoryLocation="default" serverId="8f35da90-5b54-48c9-8e52-970f56b533ac" />
   <config-repos>
     <config-repo plugin="yaml.config.plugin">
       <git url="https://github.com/tomzo/gocd-yaml-config-example.git" />

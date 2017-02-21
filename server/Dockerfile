@@ -1,7 +1,7 @@
 FROM delitescere/jdk:latest
 
-ARG GO_VERSION=17.1.0-4511
-ARG DOWNLOAD_URL=https://download.gocd.io/binaries
+ARG GO_VERSION
+ARG DOWNLOAD_URL
 
 RUN apk upgrade --update && \
     apk --no-cache add git bash
