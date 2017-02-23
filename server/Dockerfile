@@ -1,8 +1,10 @@
-FROM delitescere/jdk:latest
+FROM delitescere/jdk:8
 
-ARG GO_VERSION=
-ARG DOWNLOAD_URL=
-LABEL version="$GO_VERSION" name="gocd.server"
+ARG GOCD_VERSION=
+ARG GOCD_DOWNLOAD_URL=
+ARG GOCD_DOWNLOAD_SHA256=
+
+LABEL version="$GOCD_VERSION" name="gocd.server"
 
 RUN apk upgrade --update \
     && apk --no-cache add git bash
@@ -23,13 +25,16 @@ EXPOSE 8153 8154
 COPY ./files/* /
 
 WORKDIR /
-RUN wget $DOWNLOAD_URL/$GO_VERSION/generic/go-server-$GO_VERSION.zip -O go-server.zip \
+
+RUN set -ex \
+    && wget $GOCD_DOWNLOAD_URL/$GOCD_VERSION/generic/go-server-$GOCD_VERSION.zip -O go-server.zip \
+    && sha256sum go-server.zip | grep "$GOCD_DOWNLOAD_SHA256  go-server.zip" \
     && unzip go-server.zip \
     && mv ./go-server-* ./go-server \
-    && chmod 755 /start \
-    && rm -rf /go-server.zip go-server-* /var/tmp/* /go-server/init.* /go-server/server.cmd /go-server/*.bat /go-server/*.sh /go-server/default.* /go-server/defaultFiles
+    && chmod 755 /start
 
-HEALTHCHECK --interval=1m --timeout=3s \
-  CMD curl -f https://localhost:8154/ || exit 1
+RUN rm -rf /go-server.zip go-server-* /var/tmp/* /go-server/init.* /go-server/server.cmd /go-server/*.bat /go-server/*.sh /go-server/default.* /go-server/defaultFiles \
+    && rm -rf /tmp/* /var/cache/apk/* \
+    && apk del build-dependencies
 
 CMD ["/start"]

@@ -5,8 +5,9 @@ services:
     build:
       context: ./server
       args:
-        - GO_VERSION=17.1.0-4511
-        - DOWNLOAD_URL=https://download.gocd.io/binaries
+        - GOCD_VERSION=17.1.0-4511
+        - GOCD_DOWNLOAD_URL=https://download.gocd.io/binaries
+        - GOCD_DOWNLOAD_SHA256=caa68da42f5ad54c52331ff1f7ecbbe8ab48fab66600c23638f17e4ab5d77d24
     environment:
       - MSG_TIME=0
       - GO_AGENT_AUTO_REGISTER_KEY=388b633a88de126531afa41eff9aa69e
@@ -37,8 +38,13 @@ services:
     build:
       context: ./agent
       args:
-        - GOCD_VERSION=17.1.0
-        - GOCD_REVISION=4511
+        - GOCD_VERSION=17.1.0-4511
+        - GOCD_DOWNLOAD_URL=https://download.go.cd/binaries
+        - GOCD_DOWNLOAD_SHA256=
+        - DOCKER_COMPOSE_DOWNLOAD_URL=https://github.com/docker/compose/releases/download/1.11.2/docker-compose-Linux-x86_64
+        - DOCKER_COMPOSE_DOWNLOAD_SHA256=8d55adce12461c9f2abd907da1138b3e925919212611a54c94c4794ab0a975fc
+        - DOCKER_DOWNLOAD_URL=https://get.docker.com/builds/Linux/x86_64/docker-1.13.1.tgz
+        - DOCKER_DOWNLOAD_SHA256=97892375e756fd29a304bd8cd9ffb256c2e7c8fd759e12a55a6336e15100ad75
     environment:
       - GO_SERVER_URL=https://gocd-server:8154/go
       - DOCKER_HOST=dind
