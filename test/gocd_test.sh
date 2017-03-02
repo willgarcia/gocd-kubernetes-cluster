@@ -1,13 +1,24 @@
+black() { echo "$(tput setaf 0)$*$(tput setaf 9)"; }
+red() { echo "$(tput setaf 1)$*$(tput setaf 9)"; }
+green() { echo "$(tput setaf 2)$*$(tput setaf 9)"; }
+yellow() { echo "$(tput setaf 3)$*$(tput setaf 9)"; }
+blue() { echo "$(tput setaf 4)$*$(tput setaf 9)"; }
+magenta() { echo "$(tput setaf 5)$*$(tput setaf 9)"; }
+cyan() { echo "$(tput setaf 6)$*$(tput setaf 9)"; }
+white() { echo "$(tput setaf 7)$*$(tput setaf 9)"; }
+
 assert_ok() {
   COUNTER_OK=$((COUNTER_OK+1))
   COUNTER=$((COUNTER+1))
-  echo "ok $COUNTER $scenario"
+  green "ok $COUNTER $scenario"
 }
 
 assert_ko() {
   COUNTER=$((COUNTER+1))
-  echo "ko $COUNTER $scenario"
+  red "ko $COUNTER $scenario"
 }
+
+
 
 COUNTER=0
 COUNTER_OK=0
@@ -45,4 +56,4 @@ docker exec -it gocd_gocd-agent_1 docker run hello-world >/dev/null
 status=$?
 [ $status -eq 0 ] && assert_ok || assert_ko
 
-echo "$COUNTER_OK..$COUNTER"
+cyan "$COUNTER_OK..$COUNTER"
