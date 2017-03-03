@@ -1,50 +1,31 @@
+# docker-gocd
 
-### User configuration
-1. python -c "import sha;from base64 import b64encode;print b64encode(sha.new('my_password').digest())"
+Docker images to run:
+* a GoCD server with [pipelines as code](https://docs.gocd.io/current/advanced_usage/pipelines_as_code.html), repeatable/preservable configuration and minimum [backup](https://docs.gocd.io/current/installation/upgrading_go.html) management
+* GoCD agent(s) with master [auto-registration](https://docs.gocd.io/current/advanced_usage/agent_auto_register.html)
+* Run Docker-in-Docker on the GoCD agent(s)
 
-2. create a file on the go_server /path/to/file.
+## Docker images
 
-3. In the configuration specify the path to the file created like below:
+These images are not official GoCD images. Please, refer to the [Docker hub GoCD page](https://hub.docker.com/u/gocd/) for the officially maintained images.
 
-```
-<security>
-  <passwordFile path="/var/tmp/passwd" />
-</security>
-```
+- willgarcia/gocd-server [`latest`/`1` (*Dockerfile*)](https://github.com/willgarcia/docker-gocd/blob/master/server/Dockerfile) [![](https://images.microbadger.com/badges/version/willgarcia/gocd-server.svg)](http://microbadger.com/images/willgarcia/gocd-server "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/willgarcia/gocd-server.svg)](http://microbadger.com/images/willgarcia/gocd-server "Get your own image badge on microbadger.com")
+- willgarcia/gocd-agent [`latest`/`1` (*Dockerfile*)](https://github.com/willgarcia/docker-gocd/blob/master/agent/Dockerfile) [![](https://images.microbadger.com/badges/version/willgarcia/gocd-agent.svg)](http://microbadger.com/images/willgarcia/gocd-agent "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/willgarcia/gocd-agent.svg)](http://microbadger.com/images/willgarcia/gocd-agent "Get your own image badge on microbadger.com")
+- willgarcia/gocd-server-backup [`latest`/`1` (*Dockerfile*)](https://github.com/willgarcia/docker-gocd/blob/master/server-backup/Dockerfile) [![](https://images.microbadger.com/badges/version/willgarcia/gocd-server-backup.svg)](http://microbadger.com/images/willgarcia/gocd-server-backup "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/willgarcia/gocd-server-backup.svg)](http://microbadger.com/images/willgarcia/gocd-server-backup "Get your own image badge on microbadger.com")
+- willgarcia/dind [`latest`/`1` (*Dockerfile*)](https://github.com/willgarcia/docker-gocd/blob/master/dind/Dockerfile) [![](https://images.microbadger.com/badges/version/willgarcia/dind.svg)](http://microbadger.com/images/willgarcia/dind "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/willgarcia/dind.svg)](http://microbadger.com/images/willgarcia/dind "Get your own image badge on microbadger.com")
 
-4. Subsequently, the users can be created by adding the users and roles as follows:
+## Usage
 
-```
-<server>
-  <security>
-    <passwordFile path="/var/tmp/passwd" />
-    <roles>
-      <role name="admin">
-        <users>
-          <user>fred.bloggs</user>
-          <user>jim.smith</user>
-        </users>
-      </role>
-    <roles>
-  </security>
-</server>
-```
-
-5. Finally, the hashed password and the username is stored in the file created as <username>:<hased_password>.
-This file will act as the place holder for user credentials.
-
-6. You can create users using gocd API. the format is below:
+Development only.
 
 ```
-curl -L --insecure 'https://<go_server>:8154/go/api/users' \
-      -u 'fred.bloggs:admin' \
-      -H 'Accept: application/vnd.go.cd.v1+json' \
-      -H 'Content-Type: application/json' \
-      -X POST \
-      -d '{
-            "email": "foobar@example.com",
-            "login_name": "foo",
-            "password": "bar"
-          }'
+$ docker-compose up
+```
 
+Visit https://localhost:8154.
+
+## Tests
+
+```
+$ bash test/gocd_test.sh
 ```
